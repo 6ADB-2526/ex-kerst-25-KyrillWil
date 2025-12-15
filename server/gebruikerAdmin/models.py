@@ -5,5 +5,6 @@ class gebruikers(models.Model):
     login = models.CharField(max_length=25)
     password = models.CharField(max_length=25)
     email = models.CharField(max_length=30)
+    # maak gebruik van default waarden 
     role = models.CharField(max_length=25)
     isSuperuser = models.CharField(max_length=20)

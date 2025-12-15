@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render  # waarom importeer je render? 
 from django.http import HttpResponse, JsonResponse
 import json
 from .models import gebruikers
@@ -19,6 +19,8 @@ def addUser(request):
     newUser.login = post_data["login"]
     newUser.password = post_data["password"]
     newUser.email = post_data["email"]
+
+    # mocht je in je model defaults gebruikt hebben zijn onderstaande zaken niet noodzakelijk
     newUser.role = post_data["role"]
     newUser.isSuperuser = post_data["isSuperuser"]
     newUser.save()
@@ -46,6 +48,8 @@ def bewerkUser(request, id):
 #gebruiker verwijder met id
 @csrf_exempt
 def deleteUser(request, id):
+    # waarom heb je hier post_data nodig terwijl je het niet gebruikt.
+    # Een delete doe je niet via url-variabelen. Dit is te riskant.
     post_data =  json.loads(request.body.decode('utf-8'))
     userId = gebruikers.objects.get(pk = id)
     userId.delete()
@@ -58,9 +62,12 @@ def gebruikerId(request, id):
 
 #alleen logins tonen
 def userLogin(request):
+    # wat ben je met Login als je geen ID hebt. Wat wil je hier verder mee doen? 
     users = gebruikers.objects.all().values("login")
     returnUser = list(users)
     return JsonResponse(returnUser, safe=False)
+
+# controle van login in combinatie met wachtwoord kan ik niet terugvinden. 
 
 
 
